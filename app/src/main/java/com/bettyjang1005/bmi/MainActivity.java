@@ -1,5 +1,6 @@
 package com.bettyjang1005.bmi;
 
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,14 +12,17 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String s = new String("abc");
+    private EditText edWeight;
+    private EditText edHeight;
+    private Button help;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        findViews();
         getResources().getString(R.string.app_name);
-        Button help = (Button) findViewById(R.id.b_help);
         help.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,6 +32,54 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+    protected void onCreate() {
+        super.onStart();
+        Log.d("MainActivity","onCreate");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Log.d("MainActivity","onStart");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d("MainActivity","onStop");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d("MainActivity","onDestroy");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d("MainActivity","onPause");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("MainActivity","onResume");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d("MainActivity","onRestart");
+    }
+
+    private void findViews() {
+        edWeight = (EditText) findViewById(R.id.ed_weight);
+        edHeight = (EditText) findViewById(R.id.ed_height);
+        help = (Button) findViewById(R.id.b_help);
+    }
+
     public void bmi(View view) {
         //System.out.println("hi hi hi");
         //Log.d("MainActivity","testing bmi method");
@@ -43,11 +95,14 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         float bmi = edweight/(edheight*edheight);
-        if (bmi < 20){
+        Intent intent = new Intent(this,ResultActivity.class);
+        intent.putExtra("BMI_Extra",bmi);
+        startActivity(intent);
+      /*  if (bmi < 20){
             new  AlertDialog.Builder(this).setMessage("Your Bmi is: "+bmi+"  "+"請多吃點").show();
         }else {
             new AlertDialog.Builder(this).setMessage("Your Bmi is: "+bmi).show();
-        }
+        }*/
        /*new AlertDialog.Builder(this).setMessage(getString(R.string.Your_BMI_is_) + bmi).setTitle(R.string.BMI_title)
                 .setPositiveButton(R.string.ok,null).setNegativeButton(R.string.no,null)
                 .setNeutralButton(R.string.cancel,null)
